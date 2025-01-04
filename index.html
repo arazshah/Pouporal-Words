@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Word Manager</title>
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -15,22 +16,48 @@
       border: 1px solid #ddd;
       border-radius: 5px;
     }
+    .sentence-item {
+      margin-bottom: 10px;
+    }
+    .sentence-item button {
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="my-4">Word Manager</h1>
 
-    <!-- Form to Fetch Word Data -->
+    <!-- Form to Add a Word -->
     <form id="wordForm" class="mb-4">
       <div class="mb-3">
-        <label for="word" class="form-label">Enter a Word</label>
-        <input type="text" class="form-control" id="word" placeholder="e.g., example" required>
+        <label for="word" class="form-label">Word</label>
+        <input type="text" class="form-control" id="word" placeholder="Enter a word" required>
       </div>
-      <button type="submit" class="btn btn-primary">Fetch Word Data</button>
+      <div class="mb-3">
+        <label for="sentences" class="form-label">Sentences (comma-separated)</label>
+        <textarea class="form-control" id="sentences" rows="3" placeholder="Enter sentences" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="reading_example" class="form-label">Reading Example</label>
+        <input type="text" class="form-control" id="reading_example" placeholder="Enter a reading example" required>
+      </div>
+      <div class="mb-3">
+        <label for="quote" class="form-label">Quote</label>
+        <input type="text" class="form-control" id="quote" placeholder="Enter a quote" required>
+      </div>
+      <div class="mb-3">
+        <label for="synonyms" class="form-label">Synonyms (comma-separated)</label>
+        <input type="text" class="form-control" id="synonyms" placeholder="Enter synonyms" required>
+      </div>
+      <div class="mb-3">
+        <label for="antonyms" class="form-label">Antonyms (comma-separated)</label>
+        <input type="text" class="form-control" id="antonyms" placeholder="Enter antonyms" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Word</button>
     </form>
 
-    <!-- Display Word Data -->
+    <!-- List of Words -->
     <div class="word-list" id="wordList"></div>
 
     <!-- Download JSON Button -->
