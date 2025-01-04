@@ -4,7 +4,7 @@ let wordData = null;
 
 // Fetch word data from Merriam-Webster API
 async function fetchWordData(word) {
-  const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${API_KEY}`;
+  const url = `https://dictionaryapi.com/api/v3/references/learners/json/${word}?key=${API_KEY}`;
 
   try {
     const response = await fetch(url);
@@ -24,13 +24,22 @@ function displayWordData(data) {
   if (Array.isArray(data) && data.length > 0) {
     const wordItem = document.createElement("div");
     wordItem.className = "word-item";
+
+    // Extract word details
+    const word = data[0].meta.id;
+    const partOfSpeech = data[0].fl;
+    const definition = data[0].shortdef[0];
+    const examples = data[0].def[0].sseq[0][0][1].dt
+      .filter((item) => item[0] === "vis")
+      .flatMap((item) => item[1].map((example) => example.t));
+
     wordItem.innerHTML = `
-      <h3>${data[0].meta.id}</h3>
-      <p><strong>Definition:</strong> ${data[0].shortdef.join(", ")}</p>
-      <p><strong>Part of Speech:</strong> ${data[0].fl}</p>
+      <h3>${word}</h3>
+      <p><strong>Part of Speech:</strong> ${partOfSpeech}</p>
+      <p><strong>Definition:</strong> ${definition}</p>
       <p><strong>Examples:</strong></p>
       <ul>
-        ${data[0].shortdef.map((def) => `<li>${def}</li>`).join("")}
+        ${examples.map((example) => `<li>${example}</li>`).join("")}
       </ul>
     `;
     wordList.appendChild(wordItem);
