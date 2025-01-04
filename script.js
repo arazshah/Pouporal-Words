@@ -29,27 +29,36 @@ function loadWords() {
   const wordList = document.getElementById('wordList');
   wordList.innerHTML = '';
 
-  words.forEach((word, index) => {
+  words.forEach((word) => {
     const wordItem = document.createElement('div');
     wordItem.className = 'word-item';
     wordItem.innerHTML = `
       <h3>${word.word}</h3>
-      <p><strong>Sentences:</strong> ${word.sentences.join(', ')}</p>
       <p><strong>Reading Example:</strong> ${word.reading_example}</p>
       <p><strong>Quote:</strong> ${word.quote}</p>
       <p><strong>Synonyms:</strong> ${word.synonyms.join(', ')}</p>
       <p><strong>Antonyms:</strong> ${word.antonyms.join(', ')}</p>
-      <button onclick="deleteWord(${index})">Delete</button>
+      <div>
+        <strong>Sentences:</strong>
+        ${word.sentences
+          .map(
+            (sentence) => `
+          <div class="sentence-item">
+            ${sentence}
+            <button class="btn btn-info btn-sm" onclick="speak('${sentence}')">Listen</button>
+          </div>
+        `
+          )
+          .join('')}
+      </div>
     `;
     wordList.appendChild(wordItem);
   });
 }
 
-function deleteWord(index) {
-  words.splice(index, 1);
-  localStorage.setItem('words', JSON.stringify(words));
-  alert('Word deleted successfully');
-  loadWords();
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
 }
 
 document.getElementById('downloadBtn').addEventListener('click', () => {
